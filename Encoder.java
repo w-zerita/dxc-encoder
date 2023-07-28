@@ -12,9 +12,29 @@ public class Encoder {
             ',', '-', '.', '/' ));
 
     private char offset;
-
+    private String plainText;
+    private String encodedText;
+    
     public char getOffset() { return offset; }
     public void setOffset(char offset) { this.offset = offset; }
+    public String getPlainText() { return plainText; }
+    public void setPlainText(String plainText) { this.plainText = plainText; }
+    public String getEncodedText() { return encodedText; }
+    public void setEncodedText(String encodedText) { this.encodedText = encodedText; }
+    
+    public Encoder() {}
+
+    public Encoder(char offset, String plainText) {
+        this.offset = offset;
+        this.plainText = plainText;
+        this.encodedText = encode(plainText);
+    }
+    
+    public Encoder(String encodedText) {
+        this.encodedText = encodedText;
+        this.offset = encodedText.charAt(0);
+        this.plainText = decode(encodedText);
+    }
 
     public String encode(String plainText) {
         int shift = CHARACTERS.indexOf(offset);
@@ -33,13 +53,10 @@ public class Encoder {
                 stringBuilder.append(CHARACTERS.get(newIndex));
             }
         }
-        String encodedText = stringBuilder.toString();
-        System.out.println("Encoded Text: " + encodedText);
-        return encodedText;
+        return stringBuilder.toString();
     }
 
     public String decode(String encodedText) {
-        offset = encodedText.charAt(0);
         int shift = CHARACTERS.indexOf(offset);
         StringBuilder stringBuilder = new StringBuilder();
         for(int i = 1; i < encodedText.length(); i++) {
@@ -55,8 +72,6 @@ public class Encoder {
                 stringBuilder.append(CHARACTERS.get(newIndex));
             }
         }
-        String plainText = stringBuilder.toString();
-        System.out.println("Decoded Text: " + plainText);
-        return plainText;
+        return stringBuilder.toString();
     }
 }

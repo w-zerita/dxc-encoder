@@ -2,14 +2,18 @@ import java.util.Scanner;
 
 public class EncoderApplication {
     public static void main(String[] args) {
-        Encoder encoder = new Encoder();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter the offset character:");
-        encoder.setOffset(Character.toUpperCase(scanner.nextLine().charAt(0)));
+        char offset = Character.toUpperCase(scanner.nextLine().charAt(0));
         System.out.println("Please enter plain text to be encoded:");
-        encoder.encode(scanner.nextLine().toUpperCase());
+        String plainText = scanner.nextLine().toUpperCase();
+        Encoder encoder = new Encoder(offset, plainText);
+        System.out.println("Encoded Text: " + encoder.getEncodedText());
+
         System.out.println("Please enter encoded text to be decoded:");
-        encoder.decode(scanner.nextLine().toUpperCase());
+        String encodedText = scanner.nextLine().toUpperCase();
+        Encoder decoder = new Encoder(encodedText);
+        System.out.println("Decoded Text: " + decoder.getPlainText());
         scanner.close();
     }
 }
